@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes Agent Design</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f23; color: #e0e0e0; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .hero { text-align: center; margin-bottom: 60px; }
+        .hero h1 { font-size: 3em; color: #00d4ff; margin-bottom: 20px; }
+        .hero p { font-size: 1.2em; color: #888; max-width: 600px; margin: 0 auto; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin: 5px; }
+        .badge-blue { background: #1a4b8c; color: #00d4ff; }
+        .badge-green { background: #1b5e20; color: #4caf50; }
+        .section { background: #1a1a2e; border-radius: 12px; padding: 30px; margin-bottom: 30px; }
+        .section h2 { color: #00d4ff; margin-bottom: 20px; font-size: 1.5em; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: #16162a; border-radius: 8px; padding: 20px; border: 1px solid #2a2a4a; }
+        .card h3 { color: #fff; margin-bottom: 10px; }
+        .card p { color: #888; font-size: 0.9em; line-height: 1.6; }
+        .links { text-align: center; margin-top: 40px; }
+        .links a { display: inline-block; padding: 12px 30px; background: #00d4ff; color: #0f0f23; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 10px; }
+        .links a.secondary { background: transparent; border: 2px solid #00d4ff; color: #00d4ff; }
+        .architecture { background: #12121f; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85em; line-height: 1.8; overflow-x: auto; white-space: pre; }
+        .footer { text-align: center; padding: 40px 0; color: #555; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Hermes Agent Design</h1>
+            <p>Multi-Platform AI Agent Framework — 架构设计文档站</p>
+            <div style="margin-top: 20px;">
+                <span class="badge badge-blue">Python</span>
+                <span class="badge badge-blue">TypeScript</span>
+                <span class="badge badge-green">Open Source</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>系统架构</h2>
+            <div class="architecture">┌─────────────────────────────────────────────────────────────┐
+│                        Hermes Agent                          │
+├─────────────────────────────────────────────────────────────┤
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
+│  │   CLI    │  │   TUI    │  │  Gateway │  │ Plugin   │     │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘     │
+│       └──────────────┼──────────────┘             │            │
+│  ┌──────────────────▼─────────────────────────────────────┐ │
+│  │                    AIAgent Core                         │ │
+│  │  ┌─────────┐ ┌──────────┐ ┌─────────┐ ┌─────────┐    │ │
+│  │  │ Provider│ │  Tool    │ │ Memory  │ │  Traj.  │    │ │
+│  │  │ Manager │ │ Registry │ │ Manager │ │Compress │    │ │
+│  │  └─────────┘ └──────────┘ └─────────┘ └─────────┘    │ │
+│  └─────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘</div>
+        </div>
+
+        <div class="section">
+            <h2>核心模块</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>AIAgent Core</h3>
+                    <p>对话循环、工具编排、会话管理、预算跟踪。约12k行核心代码。</p>
+                </div>
+                <div class="card">
+                    <h3>Provider Layer</h3>
+                    <p>多LLM后端抽象层：OpenAI、Anthropic、Gemini、MiniMax、GLM等。</p>
+                </div>
+                <div class="card">
+                    <h3>Tool System</h3>
+                    <p>基于注册模式的工具自动发现机制，支持terminal/file/web/code等。</p>
+                </div>
+                <div class="card">
+                    <h3>Memory System</h3>
+                    <p>SQLite+FTS5全文搜索，会话轨迹压缩，上下文智能截断。</p>
+                </div>
+                <div class="card">
+                    <h3>Gateway</h3>
+                    <p>多平台消息路由：Telegram、Discord、Feishu、QQ、Webhook等。</p>
+                </div>
+                <div class="card">
+                    <h3>Plugin System</h3>
+                    <p>可扩展插件架构：memory、context_engine、model-providers等。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>技术栈</h2>
+            <table style="width:100%; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid #2a2a4a;">
+                    <td style="padding: 12px 0; color: #00d4ff;">Documentation</td>
+                    <td style="padding: 12px 0;">Docusaurus (React-based)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #2a2a4a;">
+                    <td style="padding: 12px 0; color: #00d4ff;">Core Language</td>
+                    <td style="padding: 12px 0;">Python 3.11+</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #2a2a4a;">
+                    <td style="padding: 12px 0; color: #00d4ff;">Web UI</td>
+                    <td style="padding: 12px 0;">React + TypeScript + Vite</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #2a2a4a;">
+                    <td style="padding: 12px 0; color: #00d4ff;">Deployment</td>
+                    <td style="padding: 12px 0;">GitHub Pages</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; color: #00d4ff;">Database</td>
+                    <td style="padding: 12px 0;">SQLite + FTS5</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="links">
+            <a href="https://github.com/YeLuo45/hermes-agent-design">View on GitHub</a>
+            <a href="https://github.com/YeLuo45/hermes-agent" class="secondary">Hermes Agent Source</a>
+            <a href="https://yeluo45.github.io/prj-proposals-manager/" class="secondary">Proposal Manager</a>
+        </div>
+
+        <div class="footer">
+            Hermes Agent Design Documentation — Built with Docusaurus
+        </div>
+    </div>
+</body>
+</html>
