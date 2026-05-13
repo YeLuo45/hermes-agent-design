@@ -35,33 +35,33 @@
 <body>
     <nav class="navbar">
         <a href="index.html">首页</a>
+        <a href="api.html">API</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="mcp.html" class="active">MCP</a>
-        <a href="#">工具系统</a>
-        <a href="#">提供商</a>
-        <a href="#">内存</a>
-        <a href="#">网关</a>
-        <a href="#">插件</a>
+        <a href="agent-runner.html">Agent Runner</a>
+        <a href="platform-adapter.html">平台适配器</a>
+        <a href="plugin-development.html">插件开发</a>
     </nav>
 
     <div class="container">
         <div class="hero">
-            <h1>Model Context Protocol</h1>
+            <h1>模型上下文协议</h1>
             <p>Hermes Agent MCP 集成 — 标准化工具调用与上下文协议</p>
             <div style="margin-top: 20px;">
                 <span class="badge badge-blue">MCP</span>
-                <span class="badge badge-purple">Tool Calling</span>
+                <span class="badge badge-purple">工具调用</span>
             </div>
         </div>
 
         <div class="section">
             <h2>什么是 MCP？</h2>
-            <p><strong>Model Context Protocol (MCP)</strong> 是一种开放标准协议，旨在为 AI 模型与外部工具、数据源之间提供标准化的通信框架。Hermes Agent 通过 MCP 实现对外部服务的统一集成与调用。</p>
-            <p>MCP 简化了 AI 代理与各种工具的集成流程，使开发者能够轻松扩展代理能力，无需为每个工具编写独立适配器。</p>
+            <p><strong>模型上下文协议（Model Context Protocol，MCP）</strong>是一种开放标准协议，旨在为 AI 模型与外部工具、数据源之间提供标准化的通信框架。Hermes Agent 通过 MCP 实现对外部服务的统一集成与调用。</p>
+            <p>MCP 简化了 AI 代理与各种工具的集成流程，使开发者能够轻松扩展代理能力，无需为每个工具编写独立适配器。通过 MCP，开发者可以快速接入文件系统、GitHub 搜索、网页搜索等多种外部服务。</p>
         </div>
 
         <div class="section">
-            <h2>mcp/ 目录结构</h2>
-            <p>Hermes Agent 在 <code>agent/</code> 目录下包含完整的 MCP 实现：</p>
+            <h2>目录结构</h2>
+            <p>Hermes Agent 在 <code>agent/mcp/</code> 目录下包含完整的 MCP 实现：</p>
             <div class="code-block">
 agent/
 └── mcp/
@@ -75,7 +75,7 @@ agent/
         </div>
 
         <div class="section">
-            <h2>mcporter CLI 工具</h2>
+            <h2>mcporter 命令行工具</h2>
             <p><code>mcporter</code> 是 Hermes Agent 提供的命令行工具，用于管理 MCP 服务器连接与配置：</p>
             <div class="code-block">
 <span class="comment"># 安装 MCP 服务器</span>
@@ -170,7 +170,7 @@ mcporter remove <span class="value">filesystem</span>
         </div>
 
         <div class="footer">
-            Hermes Agent Design Documentation — MCP Integration
+            Hermes Agent 设计文档 — MCP 集成
         </div>
     </div>
 </body>
