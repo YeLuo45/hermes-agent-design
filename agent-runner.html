@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,29 +41,29 @@
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="dashboard.html">Dashboard</a>
+        <a href="index.html">首页</a>
         <a href="api.html">API</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="mcp.html">MCP</a>
         <a href="agent-runner.html" class="active">Agent Runner</a>
-        <a href="#">Memory</a>
-        <a href="#">Plugins</a>
+        <a href="platform-adapter.html">平台适配器</a>
+        <a href="plugin-development.html">插件开发</a>
     </nav>
 
     <div class="container">
         <h1>Agent Runner</h1>
-        <p class="subtitle">Provider abstraction layer, tool orchestration, and LLM routing engine</p>
+        <p class="subtitle">提供商抽象层、工具编排与 LLM 路由引擎</p>
 
         <div class="section">
-            <h2>Overview</h2>
-            <p>The <strong>Agent Runner</strong> is the core execution layer of Hermes Agent. It handles provider abstraction, manages the conversation loop, orchestrates tool execution, and routes requests to the appropriate LLM backends. This layer is designed to be provider-agnostic, allowing seamless switching between different LLM services.</p>
-            <p>The runner follows a message-in, function-calls-out model where user messages trigger a continuous loop of reasoning, tool invocation, and response generation until the task is complete.</p>
+            <h2>概述</h2>
+            <p><strong>Agent Runner</strong> 是 Hermes Agent 的核心执行层，负责提供商抽象、会话循环管理、工具编排以及请求路由到相应的大语言模型后端。该层设计为提供商无关的架构，可在不同 LLM 服务之间无缝切换。</p>
+            <p>Runner 采用"消息输入、函数调用输出"的模型，用户消息触发持续的推理、工具调用和响应生成循环，直至任务完成。</p>
         </div>
 
         <div class="section">
-            <h2>Provider Architecture</h2>
-            <p>All LLM providers implement a common <code>BaseAdapter</code> interface, ensuring consistent behavior across different backends. Each adapter handles provider-specific API formatting, response parsing, and error handling.</p>
-            <div class="flow-diagram"><span class="comment"># Provider Abstraction Flow</span>
+            <h2>提供商架构</h2>
+            <p>所有 LLM 提供商均实现统一的 <code>BaseAdapter</code> 接口，确保不同后端之间的行为一致性。每个适配器处理提供商特定的 API 格式、响应解析和错误处理。</p>
+            <div class="flow-diagram"><span class="comment"># 提供商抽象流程</span>
 ┌─────────────────────────────────────────┐
 │            AgentRunner                   │
 │  ┌───────────────────────────────────┐  │
@@ -84,7 +84,7 @@
         </div>
 
         <div class="section">
-            <h2>Supported Providers</h2>
+            <h2>支持的提供商</h2>
             <div class="provider-grid">
                 <div class="provider-card">
                     <div class="name">OpenAI</div>
@@ -108,14 +108,14 @@
                 </div>
                 <div class="provider-card">
                     <div class="name">Ollama</div>
-                    <div class="desc">Local models (Llama, Mistral, etc.)</div>
+                    <div class="desc">本地模型 (Llama, Mistral 等)</div>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Adapter Files</h2>
-            <p>Each provider has a dedicated adapter file in <code>astrbot/core/model_providers/</code>:</p>
+            <h2>适配器文件</h2>
+            <p>每个提供商在 <code>astrbot/core/model_providers/</code> 目录下都有对应的适配器文件：</p>
             <div class="file-list">
                 <div class="file-item">
                     <span class="icon">🐙</span>
@@ -146,7 +146,7 @@
 
         <div class="two-col">
             <div class="section">
-                <h2>Base Adapter Interface</h2>
+                <h2>基础适配器接口</h2>
                 <pre><code><span class="keyword">class</span> <span class="function">BaseAdapter</span>(ABC):
     <span class="keyword">async def</span> <span class="method">chat</span>(messages, tools, model):
         <span class="string">"""Send chat request to provider"""</span>
@@ -166,7 +166,7 @@
             </div>
 
             <div class="section">
-                <h2>Tool Orchestration</h2>
+                <h2>工具编排</h2>
                 <pre><code><span class="comment"># Tool execution flow</span>
 user_message
     ↓
@@ -183,13 +183,13 @@ Final response</code></pre>
         </div>
 
         <div class="section">
-            <h2>LLM Routing Logic</h2>
-            <p>The <code>ProviderManager</code> selects the appropriate adapter based on:</p>
+            <h2>LLM 路由逻辑</h2>
+            <p><code>ProviderManager</code> 根据以下条件选择合适的适配器：</p>
             <ul style="color: #aaa; line-height: 2; margin-left: 20px; margin-top: 10px;">
-                <li><strong>Model name prefix</strong> — Routes to provider based on <code>provider:model</code> format</li>
-                <li><strong>Cost optimization</strong> — Falls back to cheaper models for simple tasks</li>
-                <li><strong>Capability matching</strong> — Vision tasks route to vision-capable models</li>
-                <li><strong>Config priority</strong> — User-defined preferences in <code>config.yaml</code></li>
+                <li><strong>模型名称前缀</strong> — 根据 <code>provider:model</code> 格式路由到对应提供商</li>
+                <li><strong>成本优化</strong> — 对于简单任务自动切换到更便宜的模型</li>
+                <li><strong>能力匹配</strong> — 视觉任务自动路由到支持视觉能力的模型</li>
+                <li><strong>配置优先级</strong> — 用户在 <code>config.yaml</code> 中定义的偏好设置</li>
             </ul>
             <pre style="margin-top: 20px;"><code><span class="keyword">def</span> <span class="function">route_request</span>(model_name, task_type):
     <span class="keyword">if</span> model_name.startswith(<span class="string">"gpt"</span>):
@@ -202,29 +202,29 @@ Final response</code></pre>
         </div>
 
         <div class="section">
-            <h2>Conversation Loop</h2>
-            <div class="flow-diagram"><span class="comment"># Complete conversation execution loop</span>
+            <h2>会话循环</h2>
+            <div class="flow-diagram"><span class="comment"># 完整的会话执行循环</span>
 ┌─────────────────────────────────────────┐
-│  1. Receive user message                │
+│  1. 接收用户消息                          │
 │         ↓                               │
-│  2. Load conversation history           │
+│  2. 加载对话历史                          │
 │         ↓                               │
-│  3. Build system prompt + context       │
+│  3. 构建系统提示词 + 上下文               │
 │         ↓                               │
-│  4. Send to LLM (via adapter)           │
+│  4. 发送到 LLM（通过适配器）              │
 │         ↓                               │
-│  5. Receive response / function_call    │
+│  5. 接收响应 / function_call             │
 │         ↓                               │
-│  ┌─── Is function_call? ────┐           │
-│  │  YES                     │ NO        │
-│  ↓                         ↓            │
-│  6a. Execute tool         6b. Return     │
-│  7a. Store result          response      │
-│  8a. Goto step 4           ──────────────┘</div>
+│  ┌─── 是否为 function_call? ────┐        │
+│  │  是                         │ 否      │
+│  ↓                            ↓          │
+│  6a. 执行工具          6b. 返回          │
+│  7a. 存储结果            响应             │
+│  8a. 返回步骤 4          ──────────────┘</div>
         </div>
 
         <div class="footer">
-            Hermes Agent Design Documentation
+            Hermes Agent 设计文档
         </div>
     </div>
 </body>
