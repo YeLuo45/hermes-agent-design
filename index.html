@@ -25,9 +25,22 @@
         .links a.secondary { background: transparent; border: 2px solid #00d4ff; color: #00d4ff; }
         .architecture { background: #12121f; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85em; line-height: 1.8; overflow-x: auto; white-space: pre; }
         .footer { text-align: center; padding: 40px 0; color: #555; font-size: 0.85em; }
+        .nav { background: #1a1a2e; padding: 15px 20px; text-align: center; border-bottom: 1px solid #2a2a4a; }
+        .nav a { color: #00d4ff; text-decoration: none; margin: 0 15px; font-size: 0.95em; }
+        .nav a:hover { text-decoration: underline; }
+        .nav a.active { color: #fff; font-weight: bold; }
     </style>
 </head>
 <body>
+    <div class="nav">
+        <a href="index.html">首页</a> |
+        <a href="api.html">API</a> |
+        <a href="dashboard.html">Dashboard</a> |
+        <a href="mcp.html">MCP</a> |
+        <a href="agent-runner.html">Agent Runner</a> |
+        <a href="platform-adapter.html">平台适配器</a> |
+        <a href="plugin-development.html">插件开发</a>
+    </div>
     <div class="container">
         <div class="hero">
             <h1>Hermes Agent Design</h1>
