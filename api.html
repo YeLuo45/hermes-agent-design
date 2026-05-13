@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,156 +67,156 @@
         <div class="nav-inner">
             <a href="index.html" class="nav-brand">Hermes Agent</a>
             <div class="nav-links">
-                <a href="index.html">Overview</a>
-                <a href="api.html" class="active">HTTP API</a>
-                <a href="docs/zh/use/function-calling.html">Tool Calling</a>
-                <a href="docs/zh/use/subagent.html">Sessions</a>
-                <a href="docs/zh/providers/llm.html">Providers</a>
-                <a href="docs/zh/dev/astrbot-config.html">Configuration</a>
-                <a href="https://github.com/YeLuo45/hermes-agent-design">GitHub</a>
+                <a href="index.html">首页</a>
+                <a href="api.html" class="active">API</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="mcp.html">MCP</a>
+                <a href="agent-runner.html">Agent Runner</a>
+                <a href="platform-adapter.html">平台适配器</a>
+                <a href="plugin-dev.html">插件开发</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
         <div class="hero">
-            <h1>HTTP API Documentation</h1>
-            <p>Hermes Agent ACP Protocol HTTP API — Programmatic access to agent capabilities via RESTful endpoints. Authenticate with API keys and integrate into any workflow.</p>
+            <h1>HTTP API 文档</h1>
+            <p>Hermes Agent ACP 协议 HTTP API — 通过 RESTful 接口实现对 Agent 能力的程序化访问。使用 API 密钥进行身份验证，可集成到任意工作流中。</p>
         </div>
 
         <div class="section">
-            <h2>Authentication</h2>
-            <p>All API requests require authentication via API key. Include your key in the request headers:</p>
+            <h2>认证方式</h2>
+            <p>所有 API 请求均需通过 API 密钥进行身份验证。请将密钥包含在请求头中：</p>
             <div class="code-block">
 <code><span class="code-header">Authorization:</span> <span class="code-string">Bearer </span>your_api_key_here</code>
             </div>
-            <p>Alternative header format:</p>
+            <p>备选请求头格式：</p>
             <div class="code-block">
 <code><span class="code-header">X-API-Key:</span> <span class="code-string">abk_xxxxxxxxxxxx</span></code>
             </div>
-            <p><span class="badge badge-blue">API Key</span> Create your API key in WebUI → Settings</p>
+            <p><span class="badge badge-blue">API 密钥</span> 请在 WebUI → 设置中创建您的 API 密钥</p>
         </div>
 
         <div class="section">
-            <h2>Core Endpoints</h2>
+            <h2>核心接口</h2>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/chat</span>
-                <div class="endpoint-desc">Send a chat message. Returns SSE stream. Server generates UUID when session_id is omitted.</div>
+                <div class="endpoint-desc">发送聊天消息，返回 SSE 流。当 session_id 省略时，服务器自动生成 UUID。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/chat/sessions</span>
-                <div class="endpoint-desc">List sessions for a specific username with pagination.</div>
+                <div class="endpoint-desc">获取指定用户名下的会话列表，支持分页。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/chat/new_session</span>
-                <div class="endpoint-desc">Create a new chat session for a user.</div>
+                <div class="endpoint-desc">为用户创建一个新的聊天会话。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/chat/batch_delete_sessions</span>
-                <div class="endpoint-desc">Delete multiple chat sessions in batch.</div>
+                <div class="endpoint-desc">批量删除多个聊天会话。</div>
             </div>
 
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/configs</span>
-                <div class="endpoint-desc">List available configuration files.</div>
+                <div class="endpoint-desc">获取可用的配置文件列表。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/file</span>
-                <div class="endpoint-desc">Upload attachment for chat context.</div>
+                <div class="endpoint-desc">上传聊天上下文所需的附件文件。</div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Instant Messaging (UMO)</h2>
+            <h2>即时通讯 (UMO)</h2>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/im/message</span>
-                <div class="endpoint-desc">Send proactive message via Unified Message Interface.</div>
+                <div class="endpoint-desc">通过统一消息接口发送主动消息。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/im/bots</span>
-                <div class="endpoint-desc">List connected bot/platform IDs.</div>
+                <div class="endpoint-desc">获取已连接的机器人/平台 ID 列表。</div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Plugin & Extension API</h2>
+            <h2>插件与扩展 API</h2>
             
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/plugin/get</span>
-                <div class="endpoint-desc">Get installed plugin list.</div>
+                <div class="endpoint-desc">获取已安装的插件列表。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/plugin/detail</span>
-                <div class="endpoint-desc">Get detailed plugin information by name.</div>
+                <div class="endpoint-desc">根据插件名称获取插件详细信息。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-get">GET</span>
                 <span class="endpoint-path">/api/v1/plugin/market_list</span>
-                <div class="endpoint-desc">List available plugins from marketplace.</div>
+                <div class="endpoint-desc">获取插件市场中可用的插件列表。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/plugin/install</span>
-                <div class="endpoint-desc">Install a new plugin.</div>
+                <div class="endpoint-desc">安装新插件。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/plugin/uninstall</span>
-                <div class="endpoint-desc">Uninstall a plugin.</div>
+                <div class="endpoint-desc">卸载指定插件。</div>
             </div>
             
             <div class="endpoint">
                 <span class="endpoint-method method-post">POST</span>
                 <span class="endpoint-path">/api/v1/plugin/update</span>
-                <div class="endpoint-desc">Update a plugin to latest version.</div>
+                <div class="endpoint-desc">将插件更新至最新版本。</div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Tool Calling</h2>
-            <p>Tool calling enables the agent to interact with external systems. Tools are auto-discovered via the registry pattern and can be invoked during conversation.</p>
+            <h2>工具调用</h2>
+            <p>工具调用使 Agent 能够与外部系统进行交互。工具通过注册表模式自动发现，并可在对话过程中被调用。</p>
             
             <div class="grid">
                 <div class="card">
                     <h4>terminal</h4>
-                    <p>Execute shell commands on the host system. Useful for system administration tasks.</p>
+                    <p>在主机系统上执行 Shell 命令，适用于系统管理任务。</p>
                 </div>
                 <div class="card">
                     <h4>file</h4>
-                    <p>Read, write, and manage files. Supports path operations with security validation.</p>
+                    <p>读取、写入和管理文件，支持带安全验证的路径操作。</p>
                 </div>
                 <div class="card">
                     <h4>web</h4>
-                    <p>Web search and content fetching. Power search and research capabilities.</p>
+                    <p>网络搜索和内容获取，提供强大的搜索与研究能力。</p>
                 </div>
                 <div class="card">
                     <h4>code</h4>
-                    <p>Python code interpreter for dynamic computation and data analysis.</p>
+                    <p>Python 代码解释器，用于动态计算和数据分析。</p>
                 </div>
             </div>
             
-            <h3>Tool Schema Format</h3>
+            <h3>工具 Schema 格式</h3>
             <div class="code-block">
 <code>{
   <span class="code-string">"name"</span>: <span class="code-string">"web_search"</span>,
@@ -232,46 +232,46 @@
         </div>
 
         <div class="section">
-            <h2>Session Management</h2>
-            <p>Sessions track conversation history with automatic compression and intelligent truncation. Each user maintains independent session context.</p>
+            <h2>会话管理</h2>
+            <p>会话用于跟踪对话历史，支持自动压缩和智能截断。每个用户拥有独立的会话上下文。</p>
             
-            <h3>Request Parameters</h3>
+            <h3>请求参数</h3>
             <table class="params-table">
                 <tr>
-                    <th>Parameter</th>
-                    <th>Type</th>
-                    <th>Required</th>
-                    <th>Description</th>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>必填</th>
+                    <th>说明</th>
                 </tr>
                 <tr>
                     <td><code>username</code></td>
                     <td>string</td>
                     <td><span class="required">*</span></td>
-                    <td>User identifier for session scoping</td>
+                    <td>用于会话作用域的用户标识符</td>
                 </tr>
                 <tr>
                     <td><code>session_id</code></td>
                     <td>string (UUID)</td>
                     <td></td>
-                    <td>Specific session to continue. Auto-generated if omitted.</td>
+                    <td>指定要继续的会话 ID，如省略则自动生成</td>
                 </tr>
                 <tr>
                     <td><code>message</code></td>
                     <td>string</td>
                     <td><span class="required">*</span></td>
-                    <td>The message content to send</td>
+                    <td>要发送的消息内容</td>
                 </tr>
                 <tr>
                     <td><code>stream</code></td>
                     <td>boolean</td>
                     <td></td>
-                    <td>Enable SSE streaming response (default: true)</td>
+                    <td>启用 SSE 流式响应（默认值：true）</td>
                 </tr>
             </table>
             
-            <h3>Create New Session</h3>
+            <h3>创建新会话</h3>
             <div class="code-block">
-<code><span class="code-comment"># Create a new chat session</span>
+<code><span class="code-comment"># 创建一个新的聊天会话</span>
 curl -X POST <span class="code-string">'http://localhost:6185/api/v1/chat/new_session'</span> \
   -H <span class="code-string">'Authorization: Bearer your_api_key'</span> \
   -H <span class="code-string">'Content-Type: application/json'</span> \
@@ -280,10 +280,10 @@ curl -X POST <span class="code-string">'http://localhost:6185/api/v1/chat/new_se
         </div>
 
         <div class="section">
-            <h2>Provider Configuration</h2>
-            <p>Configure multiple LLM backends. Hermes Agent supports OpenAI, Anthropic, Gemini, MiniMax, GLM, Ollama, and more via a unified provider interface.</p>
+            <h2>Provider 配置</h2>
+            <p>配置多个 LLM 后端。Hermes Agent 通过统一的 Provider 接口支持 OpenAI、Anthropic、Gemini、MiniMax、GLM、Ollama 等多种模型。</p>
             
-            <h3>Provider Manager</h3>
+            <h3>Provider 管理器</h3>
             <div class="code-block">
 <code>{
   <span class="code-string">"providers"</span>: [
@@ -304,36 +304,36 @@ curl -X POST <span class="code-string">'http://localhost:6185/api/v1/chat/new_se
 }</code>
             </div>
             
-            <h3>Provider Types</h3>
+            <h3>Provider 类型</h3>
             <div class="grid">
                 <div class="card">
-                    <h4>OpenAI Compatible</h4>
-                    <p>OpenAI, SiliconFlow, 302.AI, NewAPI, and any OpenAI-compatible API.</p>
+                    <h4>OpenAI 兼容</h4>
+                    <p>OpenAI、SiliconFlow、302.AI、NewAPI 及任何 OpenAI 兼容 API。</p>
                 </div>
                 <div class="card">
                     <h4>Anthropic</h4>
-                    <p>Claude models via Anthropic's API with tool support.</p>
+                    <p>通过 Anthropic API 调用 Claude 模型，支持工具调用。</p>
                 </div>
                 <div class="card">
                     <h4>Google Gemini</h4>
-                    <p>Gemini Pro and Ultra models via Google AI.</p>
+                    <p>通过 Google AI 使用 Gemini Pro 和 Ultra 模型。</p>
                 </div>
                 <div class="card">
-                    <h4>Local Models</h4>
-                    <p>Ollama, LM Studio for self-hosted model inference.</p>
+                    <h4>本地模型</h4>
+                    <p>使用 Ollama、LM Studio 进行自托管模型推理。</p>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Code Examples</h2>
+            <h2>代码示例</h2>
             
-            <h3>Send Chat Message (Python)</h3>
+            <h3>发送聊天消息 (Python)</h3>
             <div class="code-block">
 <code><span class="code-keyword">import</span> requests
 <span class="code-keyword">import</span> json
 
-<span class="code-comment"># Send a chat message with streaming response</span>
+<span class="code-comment"># 发送聊天消息并获取流式响应</span>
 url = <span class="code-string">"http://localhost:6185/api/v1/chat"</span>
 headers = {
     <span class="code-string">"Authorization"</span>: <span class="code-string">"Bearer your_api_key"</span>,
@@ -350,22 +350,22 @@ response = requests.post(url, headers=headers, json=payload, stream=<span class=
         print(line.decode(<span class="code-string">'utf-8'</span>))</code>
             </div>
             
-            <h3>cURL Example</h3>
+            <h3>cURL 示例</h3>
             <div class="code-block">
-<code><span class="code-comment"># List user sessions</span>
+<code><span class="code-comment"># 获取用户会话列表</span>
 curl -X GET <span class="code-string">'http://localhost:6185/api/v1/chat/sessions?username=alice'</span> \
   -H <span class="code-string">'Authorization: Bearer your_api_key'</span>
 
-<span class="code-comment"># Send chat message</span>
+<span class="code-comment"># 发送聊天消息</span>
 curl -N <span class="code-string">'http://localhost:6185/api/v1/chat'</span> \
   -H <span class="code-string">'Authorization: Bearer your_api_key'</span> \
   -H <span class="code-string">'Content-Type: application/json'</span> \
   -d <span class="code-string">'{"message":"Hello","username":"alice"}'</span></code>
             </div>
             
-            <h3>Proactive Message (JavaScript)</h3>
+            <h3>主动消息推送 (JavaScript)</h3>
             <div class="code-block">
-<code><span class="code-comment">// Send proactive message to user via UMO</span>
+<code><span class="code-comment">// 通过 UMO 向用户发送主动消息</span>
 <span class="code-keyword">const</span> response = <span class="code-keyword">await</span> fetch(<span class="code-string">'http://localhost:6185/api/v1/im/message'</span>, {
   method: <span class="code-string">'POST'</span>,
   headers: {
@@ -382,10 +382,10 @@ curl -N <span class="code-string">'http://localhost:6185/api/v1/chat'</span> \
         </div>
 
         <div class="section">
-            <h2>ACP Protocol</h2>
-            <p>The <strong>Agent Communication Protocol (ACP)</strong> is Hermes Agent's message format for structured communication between clients and the agent runtime.</p>
+            <h2>ACP 协议</h2>
+            <p><strong>Agent 通信协议 (ACP)</strong> 是 Hermes Agent 用于在客户端与 Agent 运行时之间进行结构化通信的消息格式。</p>
             
-            <h3>ACP Message Structure</h3>
+            <h3>ACP 消息结构</h3>
             <div class="code-block">
 <code>{
   <span class="code-string">"acp_version"</span>: <span class="code-string">"1.0"</span>,
@@ -402,29 +402,29 @@ curl -N <span class="code-string">'http://localhost:6185/api/v1/chat'</span> \
 }</code>
             </div>
             
-            <h3>Message Types</h3>
+            <h3>消息类型</h3>
             <div class="grid">
                 <div class="card">
                     <h4>chat.request</h4>
-                    <p>User message with optional session context for continuing conversations.</p>
+                    <p>用户消息，包含可选的会话上下文，用于继续对话。</p>
                 </div>
                 <div class="card">
                     <h4>chat.response</h4>
-                    <p>Agent response with text content and optional tool calls.</p>
+                    <p>Agent 响应，包含文本内容及可选的工具调用。</p>
                 </div>
                 <div class="card">
                     <h4>tool.call</h4>
-                    <p>Request to execute a registered tool with parameters.</p>
+                    <p>执行已注册工具的请求，包含相关参数。</p>
                 </div>
                 <div class="card">
                     <h4>tool.result</h4>
-                    <p>Result of tool execution returned to agent for synthesis.</p>
+                    <p>工具执行结果，返回给 Agent 进行综合处理。</p>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            Hermes Agent HTTP API Documentation — ACP Protocol v1.0
+            Hermes Agent HTTP API 文档 — ACP 协议 v1.0
         </div>
     </div>
 </body>
