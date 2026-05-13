@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Runner - Hermes Agent</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f23; color: #e0e0e0; min-height: 100vh; }
+        nav { background: #1a1a2e; padding: 15px 30px; display: flex; gap: 20px; flex-wrap: wrap; }
+        nav a { color: #888; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s; font-size: 0.9em; }
+        nav a:hover { background: #2a2a4a; color: #00d4ff; }
+        nav a.active { background: #00d4ff; color: #0f0f23; font-weight: bold; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+        h1 { font-size: 2.5em; color: #00d4ff; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 1.1em; margin-bottom: 40px; }
+        .section { background: #1a1a2e; border-radius: 12px; padding: 30px; margin-bottom: 25px; }
+        .section h2 { color: #00d4ff; margin-bottom: 20px; font-size: 1.4em; border-left: 4px solid #00d4ff; padding-left: 15px; }
+        .section p { color: #aaa; line-height: 1.7; margin-bottom: 15px; }
+        .section code { background: #12121f; padding: 2px 8px; border-radius: 4px; color: #00d4ff; font-family: 'Courier New', monospace; }
+        pre { background: #12121f; padding: 20px; border-radius: 8px; overflow-x: auto; line-height: 1.6; font-size: 0.85em; }
+        pre code { background: none; padding: 0; color: #e0e0e0; }
+        .comment { color: #666; }
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .function { color: #50fa7b; }
+        .method { color: #8be9fd; }
+        .provider-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .provider-card { background: #16162a; border: 1px solid #2a2a4a; border-radius: 8px; padding: 20px; text-align: center; }
+        .provider-card .name { color: #00d4ff; font-weight: bold; font-size: 1.1em; }
+        .provider-card .desc { color: #666; font-size: 0.85em; margin-top: 8px; }
+        .flow-diagram { background: #12121f; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.8; }
+        .file-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .file-item { background: #16162a; border: 1px solid #2a2a4a; border-radius: 8px; padding: 15px 20px; display: flex; align-items: center; gap: 12px; }
+        .file-item .icon { color: #00d4ff; font-size: 1.2em; }
+        .file-item .name { color: #fff; font-family: 'Courier New', monospace; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+        .footer { text-align: center; padding: 40px 0; color: #444; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="api.html">API</a>
+        <a href="mcp.html">MCP</a>
+        <a href="agent-runner.html" class="active">Agent Runner</a>
+        <a href="#">Memory</a>
+        <a href="#">Plugins</a>
+    </nav>
+
+    <div class="container">
+        <h1>Agent Runner</h1>
+        <p class="subtitle">Provider abstraction layer, tool orchestration, and LLM routing engine</p>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p>The <strong>Agent Runner</strong> is the core execution layer of Hermes Agent. It handles provider abstraction, manages the conversation loop, orchestrates tool execution, and routes requests to the appropriate LLM backends. This layer is designed to be provider-agnostic, allowing seamless switching between different LLM services.</p>
+            <p>The runner follows a message-in, function-calls-out model where user messages trigger a continuous loop of reasoning, tool invocation, and response generation until the task is complete.</p>
+        </div>
+
+        <div class="section">
+            <h2>Provider Architecture</h2>
+            <p>All LLM providers implement a common <code>BaseAdapter</code> interface, ensuring consistent behavior across different backends. Each adapter handles provider-specific API formatting, response parsing, and error handling.</p>
+            <div class="flow-diagram"><span class="comment"># Provider Abstraction Flow</span>
+┌─────────────────────────────────────────┐
+│            AgentRunner                   │
+│  ┌───────────────────────────────────┐  │
+│  │    ProviderManager                │  │
+│  │  ┌─────────────────────────────┐  │  │
+│  │  │  LLM Router                  │  │  │
+│  │  │  ┌─────────────────────────┐  │  │  │
+│  │  │  │ OpenAI Adapter         │  │  │  │
+│  │  │  │ Anthropic Adapter      │  │  │  │
+│  │  │  │ Gemini Adapter          │  │  │  │
+│  │  │  │ MiniMax Adapter         │  │  │  │
+│  │  │  │ GLM Adapter             │  │  │  │
+│  │  │  │ Ollama Adapter          │  │  │  │
+│  │  │  └─────────────────────────┘  │  │  │
+│  │  └─────────────────────────────┘  │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘</div>
+        </div>
+
+        <div class="section">
+            <h2>Supported Providers</h2>
+            <div class="provider-grid">
+                <div class="provider-card">
+                    <div class="name">OpenAI</div>
+                    <div class="desc">GPT-4, GPT-4 Turbo, GPT-3.5 Turbo</div>
+                </div>
+                <div class="provider-card">
+                    <div class="name">Anthropic</div>
+                    <div class="desc">Claude 3.5 Sonnet, Claude 3 Opus</div>
+                </div>
+                <div class="provider-card">
+                    <div class="name">Gemini</div>
+                    <div class="desc">Gemini 1.5 Pro, Gemini 1.5 Flash</div>
+                </div>
+                <div class="provider-card">
+                    <div class="name">MiniMax</div>
+                    <div class="desc">MiniMax-Text-01, MiniMax-V01</div>
+                </div>
+                <div class="provider-card">
+                    <div class="name">GLM</div>
+                    <div class="desc">GLM-4, GLM-4V, GLM-3</div>
+                </div>
+                <div class="provider-card">
+                    <div class="name">Ollama</div>
+                    <div class="desc">Local models (Llama, Mistral, etc.)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Adapter Files</h2>
+            <p>Each provider has a dedicated adapter file in <code>astrbot/core/model_providers/</code>:</p>
+            <div class="file-list">
+                <div class="file-item">
+                    <span class="icon">🐙</span>
+                    <span class="name">openai_adapter.py</span>
+                </div>
+                <div class="file-item">
+                    <span class="icon">🧠</span>
+                    <span class="name">anthropic_adapter.py</span>
+                </div>
+                <div class="file-item">
+                    <span class="icon">✨</span>
+                    <span class="name">gemini_native_adapter.py</span>
+                </div>
+                <div class="file-item">
+                    <span class="icon">🔵</span>
+                    <span class="name">minimax_adapter.py</span>
+                </div>
+                <div class="file-item">
+                    <span class="icon">🔶</span>
+                    <span class="name">glm_adapter.py</span>
+                </div>
+                <div class="file-item">
+                    <span class="icon">🐳</span>
+                    <span class="name">ollama_adapter.py</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="section">
+                <h2>Base Adapter Interface</h2>
+                <pre><code><span class="keyword">class</span> <span class="function">BaseAdapter</span>(ABC):
+    <span class="keyword">async def</span> <span class="method">chat</span>(messages, tools, model):
+        <span class="string">"""Send chat request to provider"""</span>
+        <span class="keyword">pass</span>
+
+    <span class="keyword">async def</span> <span class="method">vision</span>(image_url, prompt):
+        <span class="string">"""Handle image understanding"""</span>
+        <span class="keyword">pass</span>
+
+    <span class="keyword">async def</span> <span class="method">count_tokens</span>(text, model):
+        <span class="string">"""Count tokens for context management"""</span>
+        <span class="keyword">pass</span>
+
+    <span class="keyword">def</span> <span class="method">parse_response</span>(response):
+        <span class="string">"""Parse provider-specific response"""</span>
+        <span class="keyword">pass</span></code></pre>
+            </div>
+
+            <div class="section">
+                <h2>Tool Orchestration</h2>
+                <pre><code><span class="comment"># Tool execution flow</span>
+user_message
+    ↓
+LLM generates function_call
+    ↓
+ToolRegistry.find_tool(name)
+    ↓
+Tool.execute(arguments)
+    ↓
+Result fed back to LLM
+    ↓
+Final response</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>LLM Routing Logic</h2>
+            <p>The <code>ProviderManager</code> selects the appropriate adapter based on:</p>
+            <ul style="color: #aaa; line-height: 2; margin-left: 20px; margin-top: 10px;">
+                <li><strong>Model name prefix</strong> — Routes to provider based on <code>provider:model</code> format</li>
+                <li><strong>Cost optimization</strong> — Falls back to cheaper models for simple tasks</li>
+                <li><strong>Capability matching</strong> — Vision tasks route to vision-capable models</li>
+                <li><strong>Config priority</strong> — User-defined preferences in <code>config.yaml</code></li>
+            </ul>
+            <pre style="margin-top: 20px;"><code><span class="keyword">def</span> <span class="function">route_request</span>(model_name, task_type):
+    <span class="keyword">if</span> model_name.startswith(<span class="string">"gpt"</span>):
+        <span class="keyword">return</span> OpenAIAdapter()
+    <span class="keyword">elif</span> model_name.startswith(<span class="string">"claude"</span>):
+        <span class="keyword">return</span> AnthropicAdapter()
+    <span class="keyword">elif</span> model_name.startswith(<span class="string">"gemini"</span>):
+        <span class="keyword">return</span> GeminiAdapter()
+    <span class="comment"># ... other providers</span></code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Conversation Loop</h2>
+            <div class="flow-diagram"><span class="comment"># Complete conversation execution loop</span>
+┌─────────────────────────────────────────┐
+│  1. Receive user message                │
+│         ↓                               │
+│  2. Load conversation history           │
+│         ↓                               │
+│  3. Build system prompt + context       │
+│         ↓                               │
+│  4. Send to LLM (via adapter)           │
+│         ↓                               │
+│  5. Receive response / function_call    │
+│         ↓                               │
+│  ┌─── Is function_call? ────┐           │
+│  │  YES                     │ NO        │
+│  ↓                         ↓            │
+│  6a. Execute tool         6b. Return     │
+│  7a. Store result          response      │
+│  8a. Goto step 4           ──────────────┘</div>
+        </div>
+
+        <div class="footer">
+            Hermes Agent Design Documentation
+        </div>
+    </div>
+</body>
+</html>
