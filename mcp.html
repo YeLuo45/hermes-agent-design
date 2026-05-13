@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP - Hermes Agent</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f23; color: #e0e0e0; min-height: 100vh; }
+        .navbar { background: #1a1a2e; padding: 15px 30px; display: flex; gap: 30px; border-bottom: 1px solid #2a2a4a; }
+        .navbar a { color: #888; text-decoration: none; font-size: 0.9em; transition: color 0.3s; }
+        .navbar a:hover, .navbar a.active { color: #00d4ff; }
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .hero { text-align: center; margin-bottom: 60px; }
+        .hero h1 { font-size: 3em; color: #00d4ff; margin-bottom: 20px; }
+        .hero p { font-size: 1.2em; color: #888; max-width: 600px; margin: 0 auto; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; margin: 5px; }
+        .badge-blue { background: #1a4b8c; color: #00d4ff; }
+        .badge-purple { background: #4a1b7a; color: #b388ff; }
+        .section { background: #1a1a2e; border-radius: 12px; padding: 30px; margin-bottom: 30px; }
+        .section h2 { color: #00d4ff; margin-bottom: 20px; font-size: 1.5em; }
+        .section p { color: #b0b0b0; line-height: 1.7; margin-bottom: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: #16162a; border-radius: 8px; padding: 20px; border: 1px solid #2a2a4a; }
+        .card h3 { color: #fff; margin-bottom: 10px; }
+        .card p { color: #888; font-size: 0.9em; line-height: 1.6; margin-bottom: 0; }
+        .code-block { background: #12121f; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85em; line-height: 1.8; overflow-x: auto; margin: 15px 0; }
+        .code-block .comment { color: #6a6a8a; }
+        .code-block .key { color: #00d4ff; }
+        .code-block .value { color: #4caf50; }
+        .code-block .string { color: #ffb74d; }
+        .footer { text-align: center; padding: 40px 0; color: #555; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html">首页</a>
+        <a href="mcp.html" class="active">MCP</a>
+        <a href="#">工具系统</a>
+        <a href="#">提供商</a>
+        <a href="#">内存</a>
+        <a href="#">网关</a>
+        <a href="#">插件</a>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Model Context Protocol</h1>
+            <p>Hermes Agent MCP 集成 — 标准化工具调用与上下文协议</p>
+            <div style="margin-top: 20px;">
+                <span class="badge badge-blue">MCP</span>
+                <span class="badge badge-purple">Tool Calling</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>什么是 MCP？</h2>
+            <p><strong>Model Context Protocol (MCP)</strong> 是一种开放标准协议，旨在为 AI 模型与外部工具、数据源之间提供标准化的通信框架。Hermes Agent 通过 MCP 实现对外部服务的统一集成与调用。</p>
+            <p>MCP 简化了 AI 代理与各种工具的集成流程，使开发者能够轻松扩展代理能力，无需为每个工具编写独立适配器。</p>
+        </div>
+
+        <div class="section">
+            <h2>mcp/ 目录结构</h2>
+            <p>Hermes Agent 在 <code>agent/</code> 目录下包含完整的 MCP 实现：</p>
+            <div class="code-block">
+agent/
+└── mcp/
+    ├── <span class="comment"># MCP 核心实现</span>
+    ├── server.py           <span class="comment"># MCP 服务器</span>
+    ├── client.py           <span class="comment"># MCP 客户端</span>
+    ├── protocol.py         <span class="comment"># 协议定义</span>
+    ├── tools.py            <span class="comment"># 工具注册与调用</span>
+    └── registry.py         <span class="comment"># 服务器配置注册表</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>mcporter CLI 工具</h2>
+            <p><code>mcporter</code> 是 Hermes Agent 提供的命令行工具，用于管理 MCP 服务器连接与配置：</p>
+            <div class="code-block">
+<span class="comment"># 安装 MCP 服务器</span>
+mcporter install <span class="value">filesystem</span> <span class="value">https://github.com/modelcontextprotocol/server-filesystem</span>
+
+<span class="comment"># 列出已配置的服务器</span>
+mcporter list
+
+<span class="comment"># 启动 MCP 服务器</span>
+mcporter start <span class="value">filesystem</span>
+
+<span class="comment"># 查看服务器状态</span>
+mcporter status <span class="value">filesystem</span>
+
+<span class="comment"># 移除服务器</span>
+mcporter remove <span class="value">filesystem</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>MCP 工具调用流程</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. 发现</h3>
+                    <p>Hermes Agent 自动扫描 mcp/ 目录，识别所有注册的 MCP 服务器与可用工具。</p>
+                </div>
+                <div class="card">
+                    <h3>2. 注册</h3>
+                    <p>通过 registry.py 将 MCP 工具注册到全局工具注册表，供 AIAgent Core 调用。</p>
+                </div>
+                <div class="card">
+                    <h3>3. 调用</h3>
+                    <p>Agent 推理决定调用工具时，通过 MCP 协议将请求发送至目标服务器。</p>
+                </div>
+                <div class="card">
+                    <h3>4. 响应</h3>
+                    <p>服务器执行后返回结构化结果，Hermes 解析并整合到对话上下文中。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>服务器配置</h2>
+            <p>在 <code>agent/config/mcp_servers.yaml</code> 中配置 MCP 服务器：</p>
+            <div class="code-block">
+<span class="key">mcp_servers:</span>
+  <span class="key">filesystem:</span>
+    <span class="key">command:</span> <span class="string">"node"</span>
+    <span class="key">args:</span>
+      - <span class="string">"/path/to/server/filesystem/index.js"</span>
+    <span class="key">env:</span>
+      <span class="key">DEBUG:</span> <span class="string">"false"</span>
+
+  <span class="key">github:</span>
+    <span class="key">command:</span> <span class="string">"python"</span>
+    <span class="key">args:</span>
+      - <span class="string">"-m"</span>
+      - <span class="string">"mcp_server_github"</span>
+    <span class="key">env:</span>
+      <span class="key">GITHUB_TOKEN:</span> <span class="string">"${GITHUB_TOKEN}"</span>
+
+  <span class="key">brave-search:</span>
+    <span class="key">command:</span> <span class="string">"npx"</span>
+    <span class="key">args:</span>
+      - <span class="string">"-y"</span>
+      - <span class="string">"@modelcontextprotocol/server-brave-search"</span>
+    <span class="key">env:</span>
+      <span class="key">BRAVE_API_KEY:</span> <span class="string">"${BRAVE_API_KEY}"</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>核心优势</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>标准化</h3>
+                    <p>统一的协议规范，无需为每个工具编写独立集成代码。</p>
+                </div>
+                <div class="card">
+                    <h3>可扩展</h3>
+                    <p>轻松添加新工具服务器，Agent 即可自动发现并使用。</p>
+                </div>
+                <div class="card">
+                    <h3>安全</h3>
+                    <p>支持环境变量注入敏感凭证，隔离配置与代码。</p>
+                </div>
+                <div class="card">
+                    <h3>跨平台</h3>
+                    <p>支持 Node.js、Python 等多种语言实现的 MCP 服务器。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Hermes Agent Design Documentation — MCP Integration
+        </div>
+    </div>
+</body>
+</html>
