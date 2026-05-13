@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hermes Agent Dashboard - Architecture</title>
+    <title>Hermes Agent 控制台 - 架构文档</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -15,7 +15,7 @@
         a { color: #00d4ff; text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        /* Navigation Bar */
+        /* 导航栏 */
         .navbar {
             background: #1a1a2e;
             padding: 0 24px;
@@ -59,13 +59,13 @@
             color: #0f0f23;
         }
 
-        /* Main Layout */
+        /* 主布局 */
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
         .hero { text-align: center; margin-bottom: 60px; }
         .hero h1 { font-size: 2.8em; color: #00d4ff; margin-bottom: 16px; }
         .hero p { font-size: 1.15em; color: #888; max-width: 700px; margin: 0 auto; }
 
-        /* Cards */
+        /* 卡片 */
         .card {
             background: #1a1a2e;
             border-radius: 12px;
@@ -84,11 +84,11 @@
         .card h2 svg { width: 24px; height: 24px; }
         .card p { color: #a0a0a0; line-height: 1.7; margin-bottom: 16px; }
 
-        /* Grid Layouts */
+        /* 网格布局 */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; }
 
-        /* Feature Cards */
+        /* 功能卡片 */
         .feature-card {
             background: #16162a;
             border-radius: 10px;
@@ -109,7 +109,7 @@
             color: #00d4ff;
         }
 
-        /* Component List */
+        /* 组件列表 */
         .component-list {
             display: flex;
             flex-wrap: wrap;
@@ -125,7 +125,7 @@
             color: #00d4ff;
         }
 
-        /* Architecture Diagram */
+        /* 架构图 */
         .diagram {
             background: #12121f;
             padding: 24px;
@@ -140,14 +140,14 @@
         .diagram .highlight { color: #00d4ff; }
         .diagram .comment { color: #555; }
 
-        /* Tech Stack Table */
+        /* 技术栈表格 */
         .tech-table { width: 100%; border-collapse: collapse; }
         .tech-table tr { border-bottom: 1px solid #2a2a4a; }
         .tech-table td { padding: 14px 0; }
         .tech-table td:first-child { color: #00d4ff; width: 180px; }
         .tech-table td:last-child { color: #a0a0a0; }
 
-        /* Page Navigation */
+        /* 页面导航 */
         .page-nav {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -173,7 +173,7 @@
             text-decoration: none;
         }
 
-        /* Footer */
+        /* 页脚 */
         .footer {
             text-align: center;
             padding: 40px 0;
@@ -185,53 +185,53 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
+    <!-- 导航栏 -->
     <nav class="navbar">
         <div class="navbar-brand">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
-            Hermes Agent Dashboard
+            Hermes Agent 控制台
         </div>
         <ul class="nav-links">
-            <a href="#overview">Overview</a>
-            <a href="#architecture">Architecture</a>
-            <a href="#pages">Pages</a>
-            <a href="#components">Components</a>
-            <a href="#configuration">Configuration</a>
-            <a href="#models">Model Picker</a>
-            <a href="#sessions">Sessions</a>
+            <a href="#overview">首页</a>
+            <a href="#api">API</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#mcp">MCP</a>
+            <a href="#agent-runner">Agent Runner</a>
+            <a href="#platform">平台适配器</a>
+            <a href="#plugins">插件开发</a>
         </ul>
     </nav>
 
     <div class="container">
-        <!-- Hero Section -->
+        <!-- 英雄区 -->
         <div class="hero">
-            <h1>Hermes Agent Dashboard</h1>
-            <p>React + TypeScript + Vite WebUI for managing the Hermes Agent framework. Provides model selection, session management, plugin configuration, and real-time monitoring.</p>
+            <h1>Hermes Agent 控制台</h1>
+            <p>基于 React + TypeScript + Vite 的 WebUI，用于管理 Hermes Agent 框架。提供模型选择、会话管理、插件配置和实时监控功能。</p>
         </div>
 
-        <!-- Tech Stack Overview -->
+        <!-- 技术栈概览 -->
         <div class="card">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="18" height="18" rx="2"/>
                     <path d="M3 9h18M9 21V9"/>
                 </svg>
-                Technology Stack
+                技术栈
             </h2>
             <table class="tech-table">
-                <tr><td>Framework</td><td>Vue 3 + Vuetify 3</td></tr>
-                <tr><td>Language</td><td>TypeScript</td></tr>
-                <tr><td>Bundler</td><td>Vite</td></tr>
-                <tr><td>State</td><td>Pinia</td></tr>
-                <tr><td>Router</td><td>Vue Router</td></tr>
+                <tr><td>框架</td><td>Vue 3 + Vuetify 3</td></tr>
+                <tr><td>语言</td><td>TypeScript</td></tr>
+                <tr><td>构建工具</td><td>Vite</td></tr>
+                <tr><td>状态管理</td><td>Pinia</td></tr>
+                <tr><td>路由</td><td>Vue Router</td></tr>
                 <tr><td>HTTP</td><td>Axios</td></tr>
                 <tr><td>API</td><td>WebSocket + REST</td></tr>
             </table>
         </div>
 
-        <!-- Dashboard Architecture -->
+        <!-- 控制台架构 -->
         <div class="card" id="architecture">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -239,7 +239,7 @@
                     <path d="M2 17l10 5 10-5"/>
                     <path d="M2 12l10 5 10-5"/>
                 </svg>
-                Dashboard Architecture
+                控制台架构
             </h2>
             <div class="diagram">
 <span class="highlight">┌─────────────────────────────────────────────────────────────┐</span>
@@ -257,7 +257,7 @@
 <span class="comment">│  │                  │  Persona     │  ...                    ││</span>
 <span class="comment">│  └─────────────────────────────────────────────────────────┘│</span>
 <span class="highlight">├─────────────────────────────────────────────────────────────┤</span>
-<span class="highlight">│                     website/src/ Components                  │</span>
+<span class="highlight">│                     dashboard/src/ Components                  │</span>
 <span class="highlight">├─────────────────────────────────────────────────────────────┤</span>
 <span class="comment">│  components/         │  layouts/           │  views/            │</span>
 <span class="comment">│  ─────────────      │  ───────────        │  ────────          │</span>
@@ -270,32 +270,32 @@
 <span class="highlight">└─────────────────────────────────────────────────────────────┘</span></div>
         </div>
 
-        <!-- Page Navigation -->
+        <!-- 页面导航 -->
         <div class="card" id="pages">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
-                Dashboard Pages
+                控制台页面
             </h2>
-            <p>Complete navigation to all 7 primary sections and their sub-pages:</p>
+            <p>完整导航至所有7个主要模块及其子页面：</p>
             <div class="page-nav">
-                <a href="#settings">Settings</a>
-                <a href="#providers">Providers</a>
-                <a href="#platforms">Platforms</a>
-                <a href="#extensions">Extensions</a>
-                <a href="#personas">Personas</a>
-                <a href="#sessions">Sessions</a>
-                <a href="#knowledge">Knowledge</a>
+                <a href="#settings">设置</a>
+                <a href="#providers">供应商</a>
+                <a href="#platforms">平台</a>
+                <a href="#extensions">扩展</a>
+                <a href="#personas">人格</a>
+                <a href="#sessions">会话</a>
+                <a href="#knowledge">知识库</a>
             </div>
         </div>
 
-        <!-- Key Features -->
+        <!-- 核心功能 -->
         <div class="grid">
-            <!-- Model Picker -->
+            <!-- 模型选择器 -->
             <div class="feature-card" id="models">
-                <h3>Model Picker</h3>
-                <p>Select and configure LLM providers. Switch between OpenAI, Anthropic, Gemini, MiniMax, GLM, Ollama, and custom endpoints.</p>
+                <h3>模型选择器</h3>
+                <p>选择并配置 LLM 提供商。可在 OpenAI、Anthropic、Gemini、MiniMax、GLM、Ollama 和自定义端点之间切换。</p>
                 <div class="component-list">
                     <span class="component-tag">ProviderPage.vue</span>
                     <span class="component-tag">ModelPicker.vue</span>
@@ -303,10 +303,10 @@
                 </div>
             </div>
 
-            <!-- Session Management -->
+            <!-- 会话管理 -->
             <div class="feature-card" id="sessions">
-                <h3>Session Management</h3>
-                <p>View, search, and manage conversation sessions. Full-text search with SQLite FTS5, session history, and trajectory compression.</p>
+                <h3>会话管理</h3>
+                <p>查看、搜索和管理对话会话。支持 SQLite FTS5 全文搜索、会话历史记录和轨迹压缩。</p>
                 <div class="component-list">
                     <span class="component-tag">SessionManagementPage.vue</span>
                     <span class="component-tag">sessionStore</span>
@@ -314,10 +314,10 @@
                 </div>
             </div>
 
-            <!-- Configuration UI -->
+            <!-- 配置界面 -->
             <div class="feature-card" id="configuration">
-                <h3>Configuration UI</h3>
-                <p>Comprehensive settings panel with theme customization, proxy configuration, API key management, and system controls.</p>
+                <h3>配置界面</h3>
+                <p>综合性设置面板，包含主题定制、代理配置、API 密钥管理和系统控制。</p>
                 <div class="component-list">
                     <span class="component-tag">Settings.vue</span>
                     <span class="component-tag">ConfigForm.vue</span>
@@ -325,10 +325,10 @@
                 </div>
             </div>
 
-            <!-- Extension System -->
+            <!-- 扩展系统 -->
             <div class="feature-card" id="extensions">
-                <h3>Extension System</h3>
-                <p>Browse and manage plugins. View installed extensions, browse the plugin market, and configure extension preferences.</p>
+                <h3>扩展系统</h3>
+                <p>浏览和管理插件。查看已安装的扩展、浏览插件市场并配置扩展偏好设置。</p>
                 <div class="component-list">
                     <span class="component-tag">ExtensionPage.vue</span>
                     <span class="component-tag">InstalledPluginsTab.vue</span>
@@ -336,20 +336,20 @@
                 </div>
             </div>
 
-            <!-- Platform Integration -->
+            <!-- 平台集成 -->
             <div class="feature-card" id="platforms">
-                <h3>Platform Integration</h3>
-                <p>Configure multi-platform messaging gateways: Telegram, Discord, Feishu, QQ, and custom webhooks.</p>
+                <h3>平台集成</h3>
+                <p>配置多平台消息网关：Telegram、Discord、飞书、QQ 和自定义 Webhook。</p>
                 <div class="component-list">
                     <span class="component-tag">PlatformPage.vue</span>
                     <span class="component-tag">gateway/adapters/</span>
                 </div>
             </div>
 
-            <!-- Persona Management -->
+            <!-- 人格管理 -->
             <div class="feature-card" id="personas">
-                <h3>Persona Management</h3>
-                <p>Create and organize AI personas with folder-based organization. Drag-and-drop interface with persona cards.</p>
+                <h3>人格管理</h3>
+                <p>创建和组织 AI 人格，支持文件夹组织结构和拖拽排序界面。</p>
                 <div class="component-list">
                     <span class="component-tag">PersonaPage.vue</span>
                     <span class="component-tag">PersonaManager.vue</span>
@@ -358,21 +358,21 @@
             </div>
         </div>
 
-        <!-- website/src Components Detail -->
+        <!-- dashboard/src/ 组件详情 -->
         <div class="card" id="components">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
                     <rect x="8" y="2" width="8" height="4" rx="1"/>
                 </svg>
-                website/src/ Components
+                dashboard/src/ 组件
             </h2>
-            <p>The dashboard UI is built with reusable Vue components located in <code>dashboard/src/</code>:</p>
+            <p>控制台 UI 由位于 <code>dashboard/src/</code> 的可复用 Vue 组件构建：</p>
             
             <div class="grid-2" style="margin-top: 20px;">
                 <div class="feature-card">
                     <h3>layouts/</h3>
-                    <p>Page layout wrappers providing consistent structure across the dashboard.</p>
+                    <p>页面布局包装器，为控制台提供一致的结构。</p>
                     <div class="component-list">
                         <span class="component-tag">FullLayout.vue</span>
                         <span class="component-tag">VerticalSidebar.vue</span>
@@ -383,7 +383,7 @@
                 </div>
                 <div class="feature-card">
                     <h3>views/</h3>
-                    <p>Page-level components representing each dashboard route and feature.</p>
+                    <p>页面级组件，代表每个控制台路由和功能。</p>
                     <div class="component-list">
                         <span class="component-tag">Settings.vue</span>
                         <span class="component-tag">ProviderPage.vue</span>
@@ -396,8 +396,8 @@
                     </div>
                 </div>
                 <div class="feature-card">
-                    <h3>components/ (shared)</h3>
-                    <p>Reusable UI components shared across multiple views and pages.</p>
+                    <h3>components/ (共享)</h3>
+                    <p>跨多个视图和页面共享的可复用 UI 组件。</p>
                     <div class="component-list">
                         <span class="component-tag">ModelPicker.vue</span>
                         <span class="component-tag">ProxySelector.vue</span>
@@ -407,7 +407,7 @@
                 </div>
                 <div class="feature-card">
                     <h3>stores/ (Pinia)</h3>
-                    <p>State management stores for reactive data across the application.</p>
+                    <p>用于应用程序中响应式数据的状态管理存储。</p>
                     <div class="component-list">
                         <span class="component-tag">sessionStore</span>
                         <span class="component-tag">configStore</span>
@@ -418,14 +418,14 @@
             </div>
         </div>
 
-        <!-- Dashboard Routes -->
+        <!-- 控制台路由 -->
         <div class="card">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 6v6l4 2"/>
                 </svg>
-                Dashboard Routes
+                控制台路由
             </h2>
             <div class="diagram">
 <span class="comment">// router/index.ts - Route Configuration</span>
@@ -446,34 +446,34 @@
 <span class="highlight">]</span></div>
         </div>
 
-        <!-- Running the Dashboard -->
+        <!-- 运行控制台 -->
         <div class="card">
             <h2>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="5 3 19 12 5 21 5 3"/>
                 </svg>
-                Running the Dashboard
+                运行控制台
             </h2>
-            <div class="diagram"><span class="comment"># Install dependencies</span>
+            <div class="diagram"><span class="comment"># 安装依赖</span>
 cd dashboard
 pnpm install
 
-<span class="comment"># Start development server</span>
+<span class="comment"># 启动开发服务器</span>
 pnpm dev
 
-<span class="comment"># Production build</span>
+<span class="comment"># 生产构建</span>
 pnpm build
 
-<span class="comment"># Preview production build</span>
+<span class="comment"># 预览生产构建</span>
 pnpm preview</div>
-            <p style="margin-top: 16px;">The dashboard runs on <code>http://localhost:3000</code> by default and connects to the Hermes Agent API server at <code>http://localhost:6185</code>.</p>
+            <p style="margin-top: 16px;">控制台默认运行在 <code>http://localhost:3000</code>，并连接到 Hermes Agent API 服务器 <code>http://localhost:6185</code>。</p>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- 页脚 -->
     <div class="footer">
-        <p>Hermes Agent Dashboard — Architecture Documentation</p>
-        <p style="margin-top: 8px;">Built with Vue 3 + TypeScript + Vite | Part of hermes-agent-design</p>
+        <p>Hermes Agent 控制台 — 架构文档</p>
+        <p style="margin-top: 8px;">基于 Vue 3 + TypeScript + Vite 构建 | 属于 hermes-agent-design 项目</p>
     </div>
 </body>
 </html>
